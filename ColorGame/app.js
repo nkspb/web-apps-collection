@@ -1,19 +1,60 @@
-let colors = generateRandomColors(6);
-
+let numColors = 6;
+let colors = generateRandomColors(numColors);
 let squares = document.querySelectorAll(".square");
 let colorDisplay = document.querySelector(".colorDisplay");
 let messageDisplay = document.querySelector(".message");
 let h1 = document.querySelector("h1");
 let resetButton = document.querySelector(".reset");
+let easyBtn = document.querySelector(".easyBtn");
+let hardBtn = document.querySelector(".hardBtn");
 
 // color to guess
 let pickedColor = pickColor();
 
 colorDisplay.textContent = pickedColor;
 
+easyBtn.addEventListener("click", function() {
+	this.classList.add("selected");
+	hardBtn.classList.remove("selected");
+	// generate 3 random colors
+	numColors = 3;
+	colors = generateRandomColors(numColors);
+	// pick a new color
+	pickedColor = pickColor();
+	colorDisplay.textContent = pickedColor;
+
+	for (let i = 0; i < squares.length; i++) {
+		// if there is a color, fill the square
+		if (colors[i]) {
+			squares[i].style.backgroundColor = colors[i];
+		// otherwise hide the square
+		} else {
+			squares[i].style.display = "none";
+		}
+	}
+});
+
+hardBtn.addEventListener("click", function() {
+	this.classList.add("selected");
+	easyBtn.classList.remove("selected");
+
+	// generate 6 random colors
+	numColors = 6;
+	colors = generateRandomColors(numColors);
+	// pick a new color
+	pickedColor = pickColor();
+	colorDisplay.textContent = pickedColor;
+
+	for (let i = 0; i < squares.length; i++) {
+		squares[i].style.backgroundColor = colors[i];
+		squares[i].style.display = "block";
+	}
+
+});
+
 resetButton.addEventListener("click", function() {
 	// Generate new colors
-	colors = generateRandomColors(6);
+	colors = generateRandomColors(numColors);
 	// Pick a new random color
 	pickedColor = pickColor();
 	// Update colorDisplay to pickedColor
@@ -22,7 +63,7 @@ resetButton.addEventListener("click", function() {
 	for (let i = 0; i < squares.length; i++) {
 		squares[i].style.backgroundColor = colors[i];
 	}
-	h1.style.backgroundColor = "#232323";
+	h1.style.backgroundColor = "steelblue";
 
 });
 
